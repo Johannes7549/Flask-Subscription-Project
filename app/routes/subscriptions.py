@@ -57,6 +57,63 @@ def get_plan(plan_id):
     plan = SubscriptionPlan.query.get_or_404(plan_id)
     return jsonify(plan.to_dict()), 200
 
+@subscriptions_bp.route('/plans/<int:plan_id>', methods=['PUT'])
+@jwt_required()
+def update_plan(plan_id):
+    """Update a subscription plan (admin only)"""
+    current_user = User.query.get(get_jwt_identity())
+    if not current_user.is_admin:
+        return jsonify({'msg': 'Admin access required'}), 403
+        
+    plan = SubscriptionPlan.query.get_or_404(plan_id)
+    data = request.get_json()
+    
+    # Update fields if provided
+    if 'name' in data:
+        plan.name = data['name']
+    if 'type' in data:
+        if data['type'] not in ['free', 'basic', 'pro']:
+            return jsonify({'msg': 'Invalid plan type'}), 400
+        plan.type = data['type']
+    if 'description' in data:
+        plan.description = data['description']
+    if 'price' in data:
+        plan.price = data['price']
+    if 'duration_days' in data:
+        plan.duration_days = data['duration_days']
+    if 'features' in data:
+        plan.features = data['features']
+    if 'is_active' in data:
+        plan.is_active = data['is_active']
+    
+    db.session.commit()
+    return jsonify(plan.to_dict()), 200
+
+@subscriptions_bp.route('/plans/<int:plan_id>', methods=['DELETE'])
+@jwt_required()
+def delete_plan(plan_id):
+    """Delete a subscription plan (admin only)"""
+    current_user = User.query.get(get_jwt_identity())
+    if not current_user.is_admin:
+        return jsonify({'msg': 'Admin access required'}), 403
+        
+    plan = SubscriptionPlan.query.get_or_404(plan_id)
+    
+    # Check if there are any active subscriptions using this plan
+    active_subscriptions = Subscription.query.filter_by(
+        plan_id=plan_id,
+        status='active'
+    ).first()
+    
+    if active_subscriptions:
+        return jsonify({
+            'msg': 'Cannot delete plan with active subscriptions. Deactivate the plan instead.'
+        }), 400
+    
+    db.session.delete(plan)
+    db.session.commit()
+    return jsonify({'msg': 'Plan deleted successfully'}), 200
+
 # --- User Subscription Endpoints ---
 
 @subscriptions_bp.route('/subscribe', methods=['POST'])
