@@ -64,6 +64,9 @@ The easiest way to run this project is with Docker and Docker Compose.
 
 **All dependencies, migrations, and admin user creation are handled automatically.**
 
+**API Documentation**
+-   https://bold-rocket-767136.postman.co/workspace/My-Workspace~ae7feb9a-0aab-40ce-8152-e9a8415aebf0/collection/25546902-a4a88743-c4ef-4d8a-9969-1c1fa7231852?action=share&creator=25546902
+
 ---
 
 ### Advanced/Development Setup (Optional)
