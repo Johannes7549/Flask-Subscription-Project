@@ -16,36 +16,82 @@ A Flask-based REST API for managing user subscriptions and subscription plans, w
 - MySQL database with SQLAlchemy ORM
 - Dockerized setup for easy deployment
 
-## Prerequisites
+## Getting Started (Docker Recommended)
 
-- Python 3.8+
-- MySQL 8.0+
-- Docker and Docker Compose (for containerized deployment)
+The easiest way to run this project is with Docker and Docker Compose.
 
-## Installation
+### Prerequisites
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/)
 
-1. Clone the repository:
-```bash
-git clone <https://github.com/Johannes7549/Flask-Subscription-Project.git>
-cd subscription-api
-```
+### Quick Start
 
-2. Create and activate a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Johannes7549/Flask-Subscription-Project.git
+   cd subscription-api
+   ```
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+2. **Copy and edit the environment file:**
+   ```bash
+   cp .env.example .env
+   # Edit .env as needed (set admin email/password, database credentials, etc.)
+   ```
+   **All configuration and secrets are now managed via the `.env` file. Docker Compose will automatically use this file.**
 
-4. Set up environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your configuration
-```
+   Example `.env` file:
+   ```env
+   DATABASE_URL=mysql+pymysql://user:password@db:3306/subscription_db
+   SECRET_KEY=your-secret-key-here
+   JWT_SECRET_KEY=your-jwt-secret-key-here
+   ADMIN_EMAIL=admin@example.com
+   ADMIN_PASSWORD=adminpassword
+
+   MYSQL_DATABASE=subscription_db
+   MYSQL_USER=user
+   MYSQL_PASSWORD=password
+   MYSQL_ROOT_PASSWORD=rootpassword
+   ```
+
+3. **Build and start the services:**
+   ```bash
+   docker-compose build
+   docker-compose up
+   ```
+
+4. **Access the API:**
+   - The API will be available at [http://localhost:5000](http://localhost:5000)
+
+**All dependencies, migrations, and admin user creation are handled automatically.**
+
+---
+
+### Advanced/Development Setup (Optional)
+
+If you want to run the app outside Docker (for development or debugging):
+
+1. Set up a Python virtual environment and install dependencies:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+2. Set up and run MySQL manually.
+3. Configure your `.env` file.
+4. Run migrations and the admin script as described above.
+5. Start the Flask app:
+   ```bash
+   flask run
+   ```
+
+---
+
+## Troubleshooting
+
+- If the web service fails to connect to the database, wait for the DB to be healthy and restart the web service:
+  ```bash
+  docker-compose restart web
+  ```
 
 ## Admin User Creation
 
