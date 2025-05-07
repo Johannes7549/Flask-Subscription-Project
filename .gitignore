@@ -61,6 +61,68 @@ log/
 .docker/
 docker-compose.override.yml
 
-# Misc
+# Local development
+local_settings.py
+instance/
+.webassets-cache
+
+# Secrets
+*.pem
+*.key
+*.cert
+secrets.json
+credentials.json
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Build and deployment
+node_modules/
+dist/
+build/
+*.pyc
+__pycache__/
+
+# System files
 .DS_Store
-Thumbs.db 
+Thumbs.db
+desktop.ini
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Cache directories
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Coverage reports
+coverage/
+.coverage
+coverage.xml
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/ 
