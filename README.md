@@ -133,6 +133,24 @@ The API will be available at `http://localhost:5000`.
 - `GET /api/subscriptions/history`  
   Get subscription history for the user.  
   **Query params:** `?type=basic` (optional, filter by plan type)
+###  Note on Subscription Upgrades
+
+> **Planned Behavior (Not Yet Implemented):**
+
+In future releases, subscription plans will be **classified based on the entity they belong to** (e.g., a specific course, product, or feature group).
+
+For example, consider two different courses: **Course A** and **Course B**. Each course may have its own set of plans:
+- **Free**
+- **Basic**
+- **Pro**
+
+Under the planned behavior:
+- Users will be allowed to **upgrade only between plans of the same entity**.
+- Example: A user subscribed to the **Basic** plan of **Course A** can only upgrade to the **Pro** or **Free** plan of **Course A**.
+- **Upgrading from a plan under Course A to a plan under Course B will be forbidden.**
+
+This restriction ensures that subscriptions remain consistent within their associated entity.
+
 
 ## Database Migrations
 
