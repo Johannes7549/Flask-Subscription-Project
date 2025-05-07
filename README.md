@@ -37,7 +37,7 @@ The easiest way to run this project is with Docker and Docker Compose.
    cp .env.example .env
    # Edit .env as needed (set admin email/password, database credentials, etc.)
    ```
-   **All configuration and secrets are now managed via the `.env` file. Docker Compose will automatically use this file.**
+   **All configuration and secrets are managed via the `.env` file. Docker Compose will automatically use this file.**
 
    Example `.env` file:
    ```env
